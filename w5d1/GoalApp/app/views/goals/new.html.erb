@@ -1,0 +1,34 @@
+<h1>Set goal</h1>
+
+<ul>
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |err| %>
+      <li><%= err %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<form action="<%= goals_url %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label for="Title">Title</label>
+  <input type="text" name="goal[title]" id="Title" value="<%= @goal.title %>">
+
+  <br><br>
+
+  <label for="Completed">Completed</label>
+  <input type="radio" name="goal[completed]" value="<%= true %>" id="Completed" <%= "checked" if @goal.completed == true %>>
+  <label for="Not completed">Not completed</label>
+  <input type="radio" name="goal[completed]" value="<%= false %>" id="Not completed" <%= "checked" if @goal.completed == false %>>
+
+  <br><br>
+
+  <label for="Public">Public</label>
+  <input type="radio" name="goal[public]" value="<%= true %>" id="Public" <%= "checked" if @goal.public == true %>>
+  <label for="Private">Private</label>
+  <input type="radio" name="goal[public]" value="<%= false %>" id="Private" <%= "checked" if @goal.public == false %>>
+
+  <br><br>
+
+  <input type="submit" value="Set goal">
+</form>

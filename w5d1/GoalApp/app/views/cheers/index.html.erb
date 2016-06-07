@@ -1,0 +1,10 @@
+<h1>Leaderboard</h1>
+
+<ol>
+  <% @goals.sort_by { |goal| goal.cheers.length }.reverse.each do |goal| %>
+    <% next if current_user != goal.user && !goal.public %>
+    <li>(<%= goal.user.username %>) <%= goal.title %> <%= goal.cheers.length %></li>
+  <% end %>
+</ol>
+
+<%= button_to "Index", goals_url, method: :get %>

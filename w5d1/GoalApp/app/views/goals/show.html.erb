@@ -1,0 +1,47 @@
+<h1><%= @goal.title %></h1>
+<%= "Private" unless @goal.public %>
+<br>
+<%= "Completed" if @goal.completed %>
+<br><br>
+<%= button_to "Edit", edit_goal_url(@goal), method: :get %>
+<br>
+<%= button_to "Delete", goal_url(@goal), method: :delete %>
+<br><br>
+<ul>
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |err| %>
+      <li><%= err %></li>
+    <% end %>
+  <% end %>
+</ul>
+<form action="<%= cheers_url %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="cheer[goal_id]" value="<%= @goal.id %>">
+  <input type="submit" value="Cheer!">
+</form>
+<br>
+<%= @goal.cheers.length %>
+<h3>Comments</h3>
+<% @goal.comments.each do |gc| %>
+<%= gc.author.username %><br>
+<%= gc.body %>
+<br><br>
+<% end %>
+
+<h3>New Comment</h3>
+<form action="<%= comments_url %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="comment[commentable_type]" value="Goal">
+
+  <label for="Body">Body</label>
+  <input type="text" name="comment[body]" id="Body">
+
+  <br><br>
+
+  <input type="hidden" name="comment[commentable_id]" value="<%= @goal.id %>">
+  <input type="submit" value="Add Comment">
+</form>
+
+
+<br>
+<%= button_to "Index", goals_url, method: :get %>

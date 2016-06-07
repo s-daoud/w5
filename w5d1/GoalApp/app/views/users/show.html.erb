@@ -1,0 +1,32 @@
+<h1><%= @user.username %></h1>
+
+<ul>
+<% @user.goals.each do |goal| %>
+  <% next if current_user != @user && !goal.public %>
+  <li><%= link_to "#{goal.title}", "/users/#{@user.id}/goals/#{goal.id}"%> <%= "Completed" if goal.completed %> <%= "Private" unless goal.public %></li>
+<% end %>
+</ul>
+
+<h3>Comments</h3>
+<% @user.comments.each do |uc| %>
+<%= uc.author.username %><br>
+<%= uc.body %>
+<br><br>
+<% end %>
+
+<h3>New Comment</h3>
+<form action="<%= comments_url %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="comment[commentable_type]" value="User">
+
+  <label for="Body">Body</label>
+  <input type="text" name="comment[body]" id="Body">
+
+  <br><br>
+
+  <input type="hidden" name="comment[commentable_id]" value="<%= @user.id %>">
+  <input type="submit" value="Add Comment">
+</form>
+
+
+<%= button_to "Index", goals_url, method: :get %>
