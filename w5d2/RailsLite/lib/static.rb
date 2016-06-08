@@ -9,13 +9,18 @@ class Static
     req = Rack::Request.new(env)
     res = Rack::Response.new
     path = req.path
-
-    if path
-      # res['Content-type'] =
-      # app.call(env)
-      res.write(File.read(path))
+    path = "." + path
+    if File.file?(path)
+      file = File.read(path)
+      res['Content-type'] = File.extname(path) == '.txt' ? 'text/plain' : 'image/jpeg'
+      res.write(file)
       res.finish
+    else
+      res.status = 404
+      res.write("File doesn't exist")
+      res.finish
+      app.call(env)
     end
-
+    res
   end
 end

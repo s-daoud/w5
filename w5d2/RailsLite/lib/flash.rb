@@ -3,24 +3,24 @@ require 'json'
 class Flash
   def initialize(req)
     cookie = req.cookies['_rails_lite_app_flash']
-    @cookie_info = cookie.nil? ? {} : JSON.parse(cookie)
-    
+    @flash_now = cookie.nil? ? {} : JSON.parse(cookie)
+    @flash = {}
   end
 
   def [](key)
-    @cookie_info[key]
+    @flash_now[key] || @flash[key]
   end
 
   def []=(key, val)
-    @cookie_info[key] = val
+    @flash[key] = val
   end
 
   def store_flash(res)
-    res.set_cookie('_rails_lite_app_flash', { path: '/', value: @cookie_info.to_json })
+    res.set_cookie('_rails_lite_app_flash', { path: '/', value: @flash.to_json })
   end
 
   def now
-      self
+    @flash_now
   end
 
 end
