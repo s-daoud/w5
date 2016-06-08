@@ -3,10 +3,6 @@ require 'active_support/core_ext'
 require 'active_support/inflector'
 require 'erb'
 require_relative './session'
-require_relative 'flash.rb'
-require_relative 'router.rb'
-require_relative 'show_exceptions.rb'
-require_relative 'static.rb'
 
 class ControllerBase
   attr_reader :req, :res, :params
@@ -62,7 +58,7 @@ class ControllerBase
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
     form_authenticity_token if @@forgery_token
-    if req.request_method != 'GET' && self.class.protect_from_forgery
+    if req.request_method != 'GET' && @@forgery_token
       check_authenticity_token
     end
     send(name)

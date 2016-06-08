@@ -1,0 +1,10 @@
+<h1>Create User</h1>
+<%= @user.errors %>
+<%= @params %>
+<form action="/users" method="post">
+
+  <label for="name">Name</label>
+  <input type="text" name="user[name]" id="name" value="<%= @user.name %>">
+
+  <input type="submit" value="Create User">
+</form>
