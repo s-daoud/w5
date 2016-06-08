@@ -3,7 +3,7 @@ require 'rack'
 app = Proc.new do |env|
   req = Rack::Request.new(env)
   res = Rack::Response.new
-  res['Content-Type'] = 'text/html'
+  res['Content-type'] = 'text/html'
   path = req.path
   res.write(path)
   res.finish
