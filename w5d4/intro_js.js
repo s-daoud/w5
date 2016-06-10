@@ -104,8 +104,6 @@ Array.prototype.bubbleSort = function() {
       }
       i++;
     }
-
-
   }
   return this;
 };
@@ -240,7 +238,7 @@ function subsets(array) {
   if (array.length === 0) {
     return [[]];
   }
-  let subArray = [];
+  // let subArray = [];
   let prevSets = subsets(array.slice(0, -1));
   let newSets = prevSets.myMap(function(el) {
     return el.concat([array[array.length - 1]]);
